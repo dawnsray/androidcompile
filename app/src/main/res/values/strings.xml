@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">水平仪</string>
+    <string name="service_notification_title">水平仪数据采集中</string>
+    <string name="permission_required_title">需要必要权限</string>
+    <string name="permission_required_message">水平仪应用需要以下权限才能正常工作：
+
+· 通知权限：用于在后台运行时显示数据采集状态
+· 网络权限：用于上传数据到服务器
+
+请在设置中授予这些权限，否则应用无法使用。</string>
+    <string name="permission_go_to_settings">前往设置</string>
+    <string name="permission_exit">退出应用</string>
+    <string name="sensor_not_available">传感器不可用，无法运行此应用</string>
+</resources>

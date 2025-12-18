@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="水平校准"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:gravity="center"
+            android:paddingTop="32dp"
+            android:paddingBottom="16dp" />
+
+        <!-- 说明文本 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="请将手机平放在水平桌面上，并使屏幕朝向与设备实际使用时保持一致（先在主界面校对方位角），\n确保设备静止后再点击开始校准按钮"
+                android:textSize="16sp"
+                android:textColor="#666666"
+                android:gravity="center"
+                android:padding="24dp"
+                android:lineSpacingExtra="4dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- 实时倾斜角显示 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#E3F2FD">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当前倾斜角"
+                    android:textSize="14sp"
+                    android:textColor="#666666"
+                    android:paddingBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvCurrentTilt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.0°"
+                    android:textSize="42sp"
+                    android:textStyle="bold"
+                    android:textColor="#1976D2" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 校准状态提示 -->
+        <TextView
+            android:id="@+id/tvCalibrationStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="准备校准"
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:gravity="center"
+            android:paddingBottom="24dp"
+            android:minHeight="40dp" />
+
+        <!-- 操作按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="取消"
+                android:textSize="16sp"
+                android:backgroundTint="#999999" />
+
+            <Button
+                android:id="@+id/btnStartCalibration"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="开始校准"
+                android:textSize="16sp"
+                android:backgroundTint="#4CAF50" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

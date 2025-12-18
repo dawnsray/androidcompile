@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- 背景圆形 -->
+    <path
+        android:fillColor="#3DDC84"
+        android:pathData="M24,24m-24,0a24,24 0,1,1 48,0a24,24 0,1,1 -48,0" />
+    <!-- 水平仪外框 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 10,20 L 38,20 L 38,28 L 10,28 Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="#2C3E50" />
+    <!-- 气泡 -->
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M 21,22 C 22.5,22 24,23 24,24 C 24,25 22.5,26 21,26 C 19.5,26 18,25 18,24 C 18,23 19.5,22 21,22 Z" />
+    <!-- 中心刻度线 -->
+    <path
+        android:fillColor="#2C3E50"
+        android:pathData="M 24,18 L 24,30"
+        android:strokeWidth="1"
+        android:strokeColor="#2C3E50" />
+</vector>

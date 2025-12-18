@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- 启动图标背景色 -->
+    <color name="ic_launcher_background">#3DDC84</color>
+    
+    <!-- 水平仪颜色 -->
+    <color name="level_background">#E0E0E0</color>
+    <color name="level_center">#4CAF50</color>
+    <color name="level_bubble">#FFA726</color>
+    <color name="level_grid">#BDBDBD</color>
+</resources>
