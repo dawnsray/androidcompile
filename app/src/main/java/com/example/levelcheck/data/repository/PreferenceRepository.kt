@@ -162,9 +162,10 @@ class PreferenceRepository(context: Context) {
      * 检查是否已完成首次配置
      */
     fun isFirstLaunchCompleted(): Boolean {
-        // 如果配置有效，则认为已完成首次配置（向后兼容）
+        // 如果配置有效,则认为已完成首次配置(向后兼容)
         if (isServerConfigured()) {
             return true
         }
         return sharedPreferences.getBoolean(Constants.KEY_FIRST_LAUNCH_COMPLETED, false)
     }
+}
