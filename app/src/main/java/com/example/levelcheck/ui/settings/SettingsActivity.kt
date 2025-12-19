@@ -19,6 +19,7 @@ class SettingsActivity : AppCompatActivity() {
     
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var viewModel: SettingsViewModel
+    private var isForceConfigMode = false
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,9 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(binding.root)
         
         viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+        
+        // 检查是否为强制配置模式
+        isForceConfigMode = intent.getBooleanExtra(Constants.INTENT_EXTRA_FORCE_CONFIG_MODE, false)
         
         setupViews()
         observeViewModel()
@@ -60,7 +64,11 @@ class SettingsActivity : AppCompatActivity() {
         
         // 取消按钮
         binding.btnCancel.setOnClickListener {
-            finish()
+            if (isForceConfigMode) {
+                showForceConfigCancelDialog()
+            } else {
+                finish()
+            }
         }
     }
     
@@ -117,6 +125,11 @@ class SettingsActivity : AppCompatActivity() {
         if (success) {
             Toast.makeText(this, "设置已保存", Toast.LENGTH_SHORT).show()
             
+            // 如果是强制配置模式，标记首次配置完成
+            if (isForceConfigMode) {
+                viewModel.markFirstLaunchCompleted()
+            }
+            
             // 通知服务更新配置
             val intent = Intent(this, SensorService::class.java).apply {
                 action = Constants.ACTION_UPDATE_CONFIG
@@ -124,6 +137,29 @@ class SettingsActivity : AppCompatActivity() {
             startService(intent)
             
             finish()
+        }
+    }
+    
+    /**
+     * 显示强制配置模式取消确认对话框
+     */
+    private fun showForceConfigCancelDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("确认退出")
+            .setMessage("配置尚未完成，退出后应用将无法正常使用。\n\n确定要退出吗？")
+            .setPositiveButton("继续配置", null)
+            .setNegativeButton("退出应用") { _, _ ->
+                // 直接关闭应用
+                finishAffinity()
+            }
+            .show()
+    }
+    
+    override fun onBackPressed() {
+        if (isForceConfigMode) {
+            showForceConfigCancelDialog()
+        } else {
+            super.onBackPressed()
         }
     }
 }

@@ -34,6 +34,7 @@ import com.example.levelcheck.util.toTimeString
 class MainActivity : AppCompatActivity() {
     
     private val TAG = "MainActivity"
+    private val REQUEST_CODE_FORCE_CONFIG = 1001
     
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
@@ -103,7 +104,9 @@ class MainActivity : AppCompatActivity() {
         
         setupViews()
         observeViewModel()
-        checkPermissions()
+        
+        // 检查首次启动配置
+        checkFirstLaunchConfiguration()
     }
     
     override fun onResume() {
@@ -225,6 +228,39 @@ class MainActivity : AppCompatActivity() {
     }
     
     /**
+     * 检查首次启动配置
+     */
+    private fun checkFirstLaunchConfiguration() {
+        if (!viewModel.isFirstLaunchCompleted()) {
+            showFirstLaunchConfigDialog()
+        } else {
+            checkPermissions()
+        }
+    }
+    
+    /**
+     * 显示首次启动配置引导对话框
+     */
+    private fun showFirstLaunchConfigDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("首次使用配置")
+            .setMessage("欢迎使用水平仪应用！\n\n请配置您的服务器地址和端口，以便应用正常工作。\n\n如果您还没有服务器，请先按照文档部署后端服务。")
+            .setPositiveButton("立即配置") { _, _ ->
+                startActivityForResult(
+                    Intent(this, SettingsActivity::class.java).apply {
+                        putExtra(Constants.INTENT_EXTRA_FORCE_CONFIG_MODE, true)
+                    },
+                    REQUEST_CODE_FORCE_CONFIG
+                )
+            }
+            .setNegativeButton("退出应用") { _, _ ->
+                finish()
+            }
+            .setCancelable(false)
+            .show()
+    }
+    
+    /**
      * 检查权限
      */
     private fun checkPermissions() {
@@ -297,6 +333,12 @@ class MainActivity : AppCompatActivity() {
         if (isServiceRunning()) {
             stopSensorService()
         } else {
+            // 检查配置是否完成
+            if (!viewModel.isServerConfigured()) {
+                showConfigRequiredDialog()
+                return
+            }
+            
             // Android 14+ 需要请求前台服务权限
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 if (ContextCompat.checkSelfPermission(
@@ -312,6 +354,20 @@ class MainActivity : AppCompatActivity() {
             }
             startSensorService()
         }
+    }
+    
+    /**
+     * 显示配置未完成对话框
+     */
+    private fun showConfigRequiredDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("配置未完成")
+            .setMessage("检测到服务器配置不完整，无法启动数据采集服务。\n\n请先完成服务器配置。")
+            .setPositiveButton("前往配置") { _, _ ->
+                startActivity(Intent(this, SettingsActivity::class.java))
+            }
+            .setNegativeButton("取消", null)
+            .show()
     }
     
     /**
@@ -411,6 +467,21 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             binding.tvMagnetometerWarning.visibility = android.view.View.GONE
+        }
+    }
+    
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        
+        if (requestCode == REQUEST_CODE_FORCE_CONFIG) {
+            // 强制配置模式返回，检查配置状态
+            if (!viewModel.isFirstLaunchCompleted()) {
+                // 配置仍未完成，重新显示引导对话框
+                showFirstLaunchConfigDialog()
+            } else {
+                // 配置完成，继续检查权限
+                checkPermissions()
+            }
         }
     }
 }

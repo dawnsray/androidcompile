@@ -106,4 +106,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val calibData = calibrationManager.getCalibrationData()
         _calibrationTime.value = calibData.calibrationTime
     }
+    
+    /**
+     * 检查服务器是否已配置
+     */
+    fun isServerConfigured(): Boolean {
+        return preferenceRepository.isServerConfigured()
+    }
+    
+    /**
+     * 检查是否已完成首次配置
+     */
+    fun isFirstLaunchCompleted(): Boolean {
+        return preferenceRepository.isFirstLaunchCompleted()
+    }
 }

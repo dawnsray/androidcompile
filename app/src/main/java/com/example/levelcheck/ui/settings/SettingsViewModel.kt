@@ -92,4 +92,11 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     fun clearValidationError() {
         _validationError.value = null
     }
+    
+    /**
+     * 标记首次配置完成
+     */
+    fun markFirstLaunchCompleted() {
+        preferenceRepository.markFirstLaunchCompleted()
+    }
 }

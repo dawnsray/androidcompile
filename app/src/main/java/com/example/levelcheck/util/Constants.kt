@@ -16,10 +16,14 @@ object Constants {
     const val KEY_CALIBRATION_TIME = "calibration_timestamp"
     
     // 默认配置值
-    const val DEFAULT_SERVER_HOST = "8.134.91.27"
-    const val DEFAULT_SERVER_PORT = 8020
+    const val DEFAULT_SERVER_HOST = ""
+    const val DEFAULT_SERVER_PORT = 0
     const val DEFAULT_UPLOAD_INTERVAL = 5
     const val DEFAULT_CALIBRATION_OFFSET = 0f
+    
+    // 首次启动标记
+    const val KEY_FIRST_LAUNCH_COMPLETED = "first_launch_completed"
+    const val INTENT_EXTRA_FORCE_CONFIG_MODE = "force_config_mode"
     
     // 上传频率范围
     const val MIN_UPLOAD_INTERVAL = 1

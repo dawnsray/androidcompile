@@ -138,4 +138,33 @@ class PreferenceRepository(context: Context) {
             apply()
         }
     }
-}
+    
+    /**
+     * 检查服务器配置是否有效
+     */
+    fun isServerConfigured(): Boolean {
+        val host = getServerHost()
+        val port = getServerPort()
+        return host.isNotBlank() && 
+               host != Constants.DEFAULT_SERVER_HOST && 
+               port > 0 && 
+               port <= Constants.MAX_PORT
+    }
+    
+    /**
+     * 标记首次配置完成
+     */
+    fun markFirstLaunchCompleted() {
+        sharedPreferences.edit().putBoolean(Constants.KEY_FIRST_LAUNCH_COMPLETED, true).apply()
+    }
+    
+    /**
+     * 检查是否已完成首次配置
+     */
+    fun isFirstLaunchCompleted(): Boolean {
+        // 如果配置有效，则认为已完成首次配置（向后兼容）
+        if (isServerConfigured()) {
+            return true
+        }
+        return sharedPreferences.getBoolean(Constants.KEY_FIRST_LAUNCH_COMPLETED, false)
+    }
