@@ -7,7 +7,7 @@ package com.example.levelcheck.data.model
  * @property uploadIntervalSeconds 上传频率，秒
  */
 data class AppConfig(
-    val serverHost: String = "8.134.91.27",
-    val serverPort: Int = 8020,
+    val serverHost: String = "",
+    val serverPort: Int = 0,
     val uploadIntervalSeconds: Int = 5
 )
